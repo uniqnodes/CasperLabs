@@ -55,6 +55,7 @@ Then copy the result, open config.toml and paste it near the trusted_hash in sin
 `wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/active_validators.sh`  
 `chmod +x active_validators.sh`  
 `./active_validators.sh` (See what BID_AMOUNT value other members of the network are using and choose a value for yourself. This value will be used when bonding.)  
+You must have gotten faucet on Clarity to bonding!  
 `wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/bond.sh`  
 `sudo nano bond.sh` (Replace the PUB_KEY_HEX with your key and replace the BID_AMOUNT fields with your choosen.)  
 `chmod +x bond.sh`  
