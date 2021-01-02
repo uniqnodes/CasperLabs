@@ -41,14 +41,13 @@ Get trusted hash for config.toml
 `curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash`  
 Then copy the result, open config.toml and paste it near the trusted_hash in single quotes and uncomment that line.  
 `sudo nano /etc/casper/config.toml`  
-`sudo systemctl start casper-node`  
-`systemctl status casper-node` (If you see the result "Active: active (running)", you can continue.)  
 
 ### Create keypair  
 `sudo chmod -R 777 /etc/casper/validator_keys`  
-`cd /etc/casper/validator_keys/`  
-`casper-client keygen`  
-if you created the key from Clarity, you can replace the files where in this folder with them. Or you can import the key created here to the account in Clarity.  
+`cd /etc/casper/validator_keys`  
+`casper-client keygen`  if you created the key from Clarity, you can replace the files where in this folder with them. Or you can import the key created here to the account in Clarity.  
+`sudo systemctl start casper-node`  
+`systemctl status casper-node` (If you see the result "Active: active (running)", you can continue.)  
 
 ### Bonding  
 `cd ~`  
