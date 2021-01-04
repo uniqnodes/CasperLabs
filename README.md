@@ -23,7 +23,7 @@ install gcc, g++ and make
 install git  
 `sudo apt install -y git`  
 
-install jk  
+install jq  
 `sudo apt-get install -y jq`  
    
 ### Clone repo  
