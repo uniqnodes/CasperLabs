@@ -1,6 +1,6 @@
 ![alt text](https://github.com/CasperLabs/casper-node/raw/master/images/CasperLabs_Logo_Horizontal_RGB.png)
 
-# casper-node
+# casper-node (ubuntu 18.04)
 ### Pre-Requisites for Building  
 `sudo apt-get update`  
 
