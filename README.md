@@ -64,3 +64,7 @@ You must have gotten faucet on Clarity to bonding!
 `./bond.sh` (If you see a Transaction hash, the bonding is success.)  
 
 `casper-client --help` (see for yourself what you can do ☺)  
+
+### Shut down node and clear state  
+`sudo systemctl stop casper-node`  
+`sudo /etc/casper/delete_local_db.sh`
