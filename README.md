@@ -30,7 +30,7 @@ install jq
 `git clone https://github.com/CasperLabs/casper-node.git`  
 `cd casper-node`  
 `git fetch`  
-`git checkout release-0.4.0`  
+`git checkout release-0.5.1`  
    
 ### Setup
 `make setup-rs && make build-system-contracts -j && make build-client-contracts -j`  
