@@ -36,9 +36,9 @@ install jq
 `make setup-rs && make build-system-contracts -j && make build-client-contracts -j`  
 `cargo build -p casper-node --release`  
 `cd ~`  
-`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.4.0-3483_amd64.deb`  
-`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node_0.4.0-3483_amd64.deb`  
-`sudo apt install -y ./casper-node_0.4.0-3483_amd64.deb ./casper-client_0.4.0-3483_amd64.deb`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.5.1-3583_amd64.deb`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node_0.5.1-3583_amd64.deb`  
+`sudo apt install -y ./casper-node_0.5.1-3583_amd64.deb ./casper-client_0.5.1-3583_amd64.deb`  
 Get trusted hash for config.toml  
 `curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash`  
 Then copy the result, open config.toml and paste it near the trusted_hash in single quotes and uncomment that line.  
