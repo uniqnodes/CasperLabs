@@ -36,7 +36,7 @@ install jq
 `make setup-rs && make build-client-contracts -j`  
 `curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.2.0-0_amd64.deb`  
 `curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.7.6-0_amd64.deb`  
-`sudo apt install -y ./casper-client_0.7.6-0_amd64.deb ./casper-node-launcher_0.2.0-0_amd64.deb`
+`sudo apt install -y ./casper-client_0.7.6-0_amd64.deb ./casper-node-launcher_0.2.0-0_amd64.deb`  
 `cd /etc/casper`  
 `sudo -u casper ./pull_casper_node_version.sh 1_0_0`  
 Get trusted hash for config.toml  
@@ -62,7 +62,7 @@ Get trusted hash for config.toml
 `cd ~`  
 `cd casper-node`  
 `casper-client put-deploy --chain-name delta-10 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='<PUBLIC_KEY>'" --session-arg="amount:u512='9000000000000000'" --session-arg="delegation_rate:u64='10'"`  
-`casper-client get-deploy <DEPLOY_HASH> | jq .result.execution_results`
+`casper-client get-deploy <DEPLOY_HASH> | jq .result.execution_results`  
 
 `casper-client --help` (see for yourself what you can do ☺)  
 
