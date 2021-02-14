@@ -8,7 +8,7 @@ install cmake
 `sudo apt-get -y install cmake`  
 
 install rust  
-`curl https://sh.rustup.rs -sSf | sh` (enter)  
+`curl --proto '=https' --tlsv1.2 https://sh.rustup.rs/ -sSf | sh` (enter)  
 `source $HOME/.cargo/env`  
    
 install libssl-dev  
@@ -30,38 +30,39 @@ install jq
 `git clone https://github.com/CasperLabs/casper-node.git`  
 `cd casper-node`  
 `git fetch`  
-`git checkout release-0.5.1`  
+`git checkout release-0.7.6`  
    
 ### Setup
-`make setup-rs && make build-system-contracts -j && make build-client-contracts -j`  
-`cargo build -p casper-node --release`  
-`cd ~`  
-`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.5.1-3583_amd64.deb`  
-`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node_0.5.1-3583_amd64.deb`  
-`sudo apt install -y ./casper-node_0.5.1-3583_amd64.deb ./casper-client_0.5.1-3583_amd64.deb`  
+`make setup-rs && make build-client-contracts -j`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.2.0-0_amd64.deb`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.7.6-0_amd64.deb`  
+`sudo apt install -y ./casper-client_0.7.6-0_amd64.deb ./casper-node-launcher_0.2.0-0_amd64.deb`
+`cd /etc/casper`  
+`sudo -u casper ./pull_casper_node_version.sh 1_0_0`  
 Get trusted hash for config.toml  
-`curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash`  
-Then copy the result, open config.toml and paste it near the trusted_hash in single quotes and uncomment that line.  
-`sudo nano /etc/casper/config.toml`  
+`sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_0/config.toml`  
+`sudo logrotate -f /etc/logrotate.d/casper-node`  
+`sudo /etc/casper/delete_local_db.sh; sleep 1`  
 
 ### Create keypair  
 `sudo chmod -R 777 /etc/casper/validator_keys`  
 `cd /etc/casper/validator_keys`  
 `casper-client keygen`  if you created the key from Clarity, you can replace the files where in this folder with them. Or you can import the key created here to the account in Clarity.  
-`sudo systemctl start casper-node`  
-`systemctl status casper-node` (If you see the result "Active: active (running)", you can continue.)  
+`sudo systemctl start casper-node-launcher`  
+`systemctl status casper-node-launcher` (If you see the result "Active: active (running)", you can continue.)  
+
+### Node Kontrol
+`cd ~`  
+`cd casper-node`  
+`wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh`  
+`chmod +x explorer.sh`  
+`./explorer.sh` (ERA and HEIGH values the HOST field should be synchronized with the system, it may take around 1.5 hours.)  
 
 ### Bonding  
 `cd ~`  
 `cd casper-node`  
-`wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/active_validators.sh`  
-`chmod +x active_validators.sh`  
-`./active_validators.sh` (See what BID_AMOUNT value other members of the network are using and choose a value for yourself. This value will be used when bonding.)  
-You must have gotten faucet on Clarity to bonding!  
-`wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/bond.sh`  
-`sudo nano bond.sh` (Replace the PUB_KEY_HEX with your key and replace the BID_AMOUNT fields with your choosen.)  
-`chmod +x bond.sh`  
-`./bond.sh` (If you see a Transaction hash, the bonding is success.)  
+`casper-client put-deploy --chain-name delta-10 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='<PUBLIC_KEY>'" --session-arg="amount:u512='9000000000000000'" --session-arg="delegation_rate:u64='10'"`  
+`casper-client get-deploy <DEPLOY_HASH> | jq .result.execution_results`
 
 `casper-client --help` (see for yourself what you can do ☺)  
 
