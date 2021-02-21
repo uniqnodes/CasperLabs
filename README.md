@@ -51,7 +51,7 @@ Get trusted hash for config.toml
 `sudo systemctl start casper-node-launcher`  
 `systemctl status casper-node-launcher` (If you see the result "Active: active (running)", you can continue.)  
 
-### Node Kontrol
+### Node Control
 `cd ~`  
 `cd casper-node`  
 `wget https://raw.githubusercontent.com/matsuro-hadouken/casper-tools/master/explorer.sh`  
@@ -62,6 +62,7 @@ Get trusted hash for config.toml
 `cd ~`  
 `cd casper-node`  
 
+(before bonding, get faucet on Clarity)
 `casper-client put-deploy --chain-name delta-10 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='<PUBLIC_KEY>'" --session-arg="amount:u512='9000000000000000'" --session-arg="delegation_rate:u64='10'"`  
 
 `casper-client get-deploy <DEPLOY_HASH> | jq .result.execution_results`  
