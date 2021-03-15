@@ -79,8 +79,6 @@ Get trusted hash for config.toml
 `sudo rm -rf /var/lib/casper/casper-node`  
 `sudo rm /etc/casper/casper-node-launcher-state.toml`  
 `sudo apt remove -y casper-client casper-node-launcher`  
-
-`cd ~`  
 `curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.9.3-0_amd64.deb`  
 `curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.3.1-0_amd64.deb`  
 `sudo apt install -y ./casper-client_0.9.3-0_amd64.deb ./casper-node-launcher_0.3.1-0_amd64.deb`  
