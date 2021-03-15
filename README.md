@@ -30,13 +30,13 @@ install jq
 `git clone https://github.com/CasperLabs/casper-node.git`  
 `cd casper-node`  
 `git fetch`  
-`git checkout release-0.7.6`  
+`git checkout release-0.9.3`  
    
 ### Setup
 `make setup-rs && make build-client-contracts -j`  
-`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.2.0-0_amd64.deb`  
-`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.7.6-0_amd64.deb`  
-`sudo apt install -y ./casper-client_0.7.6-0_amd64.deb ./casper-node-launcher_0.2.0-0_amd64.deb`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.3.1-0_amd64.deb`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.9.3-0_amd64.deb`  
+`sudo apt install -y ./casper-client_0.9.3-0_amd64.deb ./casper-node-launcher_0.3.1-0_amd64.deb`  
 `cd /etc/casper`  
 `sudo -u casper ./pull_casper_node_version.sh 1_0_0`  
 Get trusted hash for config.toml  
@@ -63,7 +63,7 @@ Get trusted hash for config.toml
 `cd casper-node`  
 
 (before bonding, get faucet on Clarity)  
-`casper-client put-deploy --chain-name delta-10 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='<PUBLIC_KEY>'" --session-arg="amount:u512='9000000000000000'" --session-arg="delegation_rate:u64='10'"`  
+`casper-client put-deploy --chain-name delta-11 --node-address http://127.0.0.1:7777 --secret-key /etc/casper/validator_keys/secret_key.pem --session-path  $HOME/casper-node/target/wasm32-unknown-unknown/release/add_bid.wasm  --payment-amount 1000000000  --session-arg="public_key:public_key='<PUBLIC_KEY>'" --session-arg="amount:u512='9000000000000000'" --session-arg="delegation_rate:u64='10'"`  
 
 `casper-client get-deploy <DEPLOY_HASH> | jq .result.execution_results`  
 
@@ -71,4 +71,23 @@ Get trusted hash for config.toml
 
 ### Shut down node and clear state  
 `sudo systemctl stop casper-node`  
-`sudo /etc/casper/delete_local_db.sh`
+`sudo /etc/casper/delete_local_db.sh`  
+
+### Update from existing setup  
+*clean up previous version nodes*  
+`sudo systemctl stop casper-node-launcher.service`  
+`sudo rm -rf /etc/casper/1_0_0`  
+`sudo rm -rf /var/lib/casper/bin/1_0_0`  
+`sudo rm -rf /var/lib/casper/casper-node`  
+`sudo rm /etc/casper/casper-node-launcher-state.toml`  
+`sudo apt remove -y casper-client casper-node-launcher`  
+
+`cd ~`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.9.3-0_amd64.deb`  
+`curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.3.1-0_amd64.deb`  
+`sudo apt install -y ./casper-client_0.9.3-0_amd64.deb ./casper-node-launcher_0.3.1-0_amd64.deb`  
+`sudo -u casper /etc/casper/pull_casper_node_version.sh 1_0_0 delta-11`  
+`sudo -u casper /etc/casper/config_from_example.sh 1_0_0`  
+`sudo logrotate -f /etc/logrotate.d/casper-node`  
+`sudo systemctl start casper-node-launcher; sleep 2`  
+`systemctl status casper-node-launcher`  
