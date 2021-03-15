@@ -67,8 +67,6 @@ Get trusted hash for config.toml
 
 `casper-client get-deploy <DEPLOY_HASH> | jq .result.execution_results`  
 
-`casper-client --help` (see for yourself what you can do ☺)  
-
 ### Shut down node and clear state  
 `sudo systemctl stop casper-node`  
 `sudo /etc/casper/delete_local_db.sh`  
