@@ -73,6 +73,7 @@ Get trusted hash for config.toml
 
 ### Update from existing setup  
 *clean up previous version nodes*  
+`cd casper-node`  
 `sudo systemctl stop casper-node-launcher.service`  
 `sudo rm -rf /etc/casper/1_0_0`  
 `sudo rm -rf /var/lib/casper/bin/1_0_0`  
