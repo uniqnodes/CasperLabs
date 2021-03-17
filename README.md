@@ -38,10 +38,10 @@ install jq
 `curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.9.3-0_amd64.deb`  
 `sudo apt install -y ./casper-client_0.9.3-0_amd64.deb ./casper-node-launcher_0.3.1-0_amd64.deb`  
 `cd /etc/casper`  
-`sudo -u casper ./pull_casper_node_version.sh 1_0_0`  
+`sudo -u casper ./pull_casper_node_version.sh 1_0_1`  
 Get trusted hash for config.toml  
 ```
-sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_0/config.toml
+sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_1/config.toml
 ```  
 `sudo logrotate -f /etc/logrotate.d/casper-node`  
 `sudo /etc/casper/delete_local_db.sh; sleep 1`  
@@ -85,10 +85,10 @@ sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/sta
 `curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-client_0.9.3-0_amd64.deb`  
 `curl -JLO https://bintray.com/casperlabs/debian/download_file?file_path=casper-node-launcher_0.3.1-0_amd64.deb`  
 `sudo apt install -y ./casper-client_0.9.3-0_amd64.deb ./casper-node-launcher_0.3.1-0_amd64.deb`  
-`sudo -u casper /etc/casper/pull_casper_node_version.sh 1_0_0 delta-11`  
-`sudo -u casper /etc/casper/config_from_example.sh 1_0_0`  
+`sudo -u casper /etc/casper/pull_casper_node_version.sh 1_0_1 delta-11`  
+`sudo -u casper /etc/casper/config_from_example.sh 1_0_1`  
 ```
-sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_0/config.toml
+sudo sed -i "/trusted_hash =/c\trusted_hash = '$(curl -s 18.144.176.168:8888/status | jq -r .last_added_block_info.hash | tr -d '\n')'" /etc/casper/1_0_1/config.toml
 ```  
 `sudo logrotate -f /etc/logrotate.d/casper-node`  
 `sudo systemctl start casper-node-launcher; sleep 2`  
